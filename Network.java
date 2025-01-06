@@ -60,7 +60,7 @@ public class Network {
         if (name1 == null || name2 == null || getUser(name1) == null || getUser(name2) == null) {
             return false;
         }
-        if (name1.toLowerCase() == name2.toLowerCase()){
+        if (name1.toLowerCase().equals(name2.toLowerCase())){
             return false;
         }
         if (getUser(name1).getfCount() == getUser(name1).getfFollows().length){
@@ -95,6 +95,9 @@ public class Network {
     /** Computes and returns the name of the most popular user in this network: 
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
+        if (userCount == 0) {
+            return null;
+        }
         User mosPopularUser = null;
         int maxTimes = 0;
         for (int i = 0; i < userCount; i++){
@@ -130,14 +133,9 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String ans = "Network:\n";
+        String ans = "Network:";
         for (int i = 0; i < userCount; i++) {
-            if (i == userCount-1){
-                ans += users[i];
-            }
-            else{
-                ans += users[i] + "\n";
-            }
+                ans += "\n" + users[i];
         }
         return ans;
     }
