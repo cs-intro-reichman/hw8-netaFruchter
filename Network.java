@@ -57,12 +57,16 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        if (getUser(name1).equals(null) || getUser(name2).equals(null)) {
+        if (getUser(name1) == null || getUser(name2) == null) {
             return false;
         }
         if (getUser(name1).getfCount() == getUser(name1).getfFollows().length){
             return false;
         }
+        if (getUser(name1).follows(name2) || name1.toLowerCase() == name2.toLowerCase() || name1 == null || name2 == null){
+            return false;
+        }
+
         getUser(name1).addFollowee(name2);
         return true;
     }
@@ -122,6 +126,9 @@ public class Network {
     public String toString() {
         String ans = "Network:\n";
         for (int i = 0; i < userCount; i++) {
+            if (i == userCount-1){
+                ans += users[i];
+            }
             ans += users[i] + "\n";
         }
         return ans;
