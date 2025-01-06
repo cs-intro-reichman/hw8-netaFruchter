@@ -57,13 +57,16 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        if (getUser(name1) == null || getUser(name2) == null) {
+        if (name1 == null || name2 == null || getUser(name1) == null || getUser(name2) == null) {
+            return false;
+        }
+        if (name1.toLowerCase() == name2.toLowerCase()){
             return false;
         }
         if (getUser(name1).getfCount() == getUser(name1).getfFollows().length){
             return false;
         }
-        if (getUser(name1).follows(name2) || name1.toLowerCase() == name2.toLowerCase() || name1 == null || name2 == null){
+        if (getUser(name1).follows(name2) || name1.toLowerCase() == name2.toLowerCase()){
             return false;
         }
 
@@ -108,11 +111,14 @@ public class Network {
      *  the users in this network. Note: A name can appear 0 or 1 times in each list. */
     private int followeeCount(String name) {
         int count = 0;
-        for (int i =0; i < userCount; i++){
+        for (int i = 0; i < userCount; i++){
             if (users[i].getName().toLowerCase().equals(name.toLowerCase())){
                 continue;
             }
             for (int j = 0; j < users[i].getfFollows().length; j++){
+                if (users[i].getfFollows()[j] == null) {
+                    continue;
+                }
                 if(name.toLowerCase().equals(users[i].getfFollows()[j].toLowerCase())){
                     count++;
                     break;
@@ -129,7 +135,9 @@ public class Network {
             if (i == userCount-1){
                 ans += users[i];
             }
-            ans += users[i] + "\n";
+            else{
+                ans += users[i] + "\n";
+            }
         }
         return ans;
     }
