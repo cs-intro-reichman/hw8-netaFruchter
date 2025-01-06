@@ -30,7 +30,7 @@ public class Network {
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
         for (int i = 0; i < userCount;i++){
-            if (users[i].getName().equals(name)){
+            if (users[i].getName().toLowerCase().equals(name.toLowerCase())){
                 return users[i];
             }
         }
@@ -44,7 +44,7 @@ public class Network {
     public boolean addUser(String name) {
         if (userCount == users.length) return false;
         for (int i = 0; i < userCount; i++) {
-            if (users[i].getName().equals(name)) {
+            if (users[i].getName().toLowerCase().equals(name.toLowerCase())) {
                 return false;
             }
         }
@@ -73,7 +73,7 @@ public class Network {
         User mosRcommendedUserToFollow = null;
         int maxCount = 0;
         for (int i = 0; i < userCount; i++){
-            if (name.equals(users[i].getName())){
+            if (users[i].getName().toLowerCase().equals(name.toLowerCase())){
                 continue;
             }
             int countMutual = getUser(name).countMutual(users[i]);
@@ -105,11 +105,11 @@ public class Network {
     private int followeeCount(String name) {
         int count = 0;
         for (int i =0; i < userCount; i++){
-            if (name.equals(users[i].getName())){
+            if (users[i].getName().toLowerCase().equals(name.toLowerCase())){
                 continue;
             }
             for (int j = 0; j < users[i].getfFollows().length; j++){
-                if(name.equals(users[i].getfFollows()[j])){
+                if(name.toLowerCase().equals(users[i].getfFollows()[j].toLowerCase())){
                     count++;
                     break;
                 }
